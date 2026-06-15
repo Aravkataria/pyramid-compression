@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pyramid·Compress | Web App</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <div class="logo">Pyramid·Compress</div>
+            <button id="themeToggle" class="btn-secondary">☀️ Light Mode</button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div id="uploadView" class="view active">
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-content">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    <h2>Drag & Drop your image here</h2>
+                    <p>or click to browse from your device</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                    <button class="btn-primary" onclick="document.getElementById('fileInput').click()">Browse Files</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="editorView" class="view hidden">
+            <header class="editor-header">
+                <button id="resetBtn" class="btn-secondary">← Back to Upload</button>
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Action</label>
+                        <select id="modeSelect">
+                            <option value="compress">Compress Image</option>
+                            <option value="decompress">Decompress Image</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Levels: <span id="levelDisplay">2</span></label>
+                        <input type="range" id="levelSlider" min="1" max="6" value="2">
+                    </div>
+
+                    <div class="control-group" id="methodGroup" style="display: none;">
+                        <label>Method</label>
+                        <select id="methodSelect">
+                            <option value="nearest">Nearest (Pixelated)</option>
+                            <option value="bilinear">Bilinear (Smooth)</option>
+                        </select>
+                    </div>
+                </div>
+            </header>
+
+            <div class="split-view">
+                <div class="panel">
+                    <div class="panel-header">
+                        <span>Original Input</span>
+                        <span id="originalSize" class="mono">-- px</span>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="originalCanvas"></canvas>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <span id="outputLabel">Compressed Output</span>
+                        <span id="outputSize" class="mono">-- px</span>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="outputCanvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
