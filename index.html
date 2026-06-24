@@ -145,6 +145,7 @@
                             <div class="flex justify-between items-center p-3 border-b border-border bg-bg/30">
                                 <span id="outputLabel" class="text-sm font-medium">Compressed</span>
                                 <div class="flex items-center gap-3">
+                                    <span id="psnrDisplay" class="text-xs font-mono bg-accent/10 text-accent border border-accent/20 px-2 py-0.5 rounded hidden">PSNR: -- dB</span>
                                     <span id="outputSize" class="text-xs font-mono text-muted">-- × -- px</span>
                                     <button id="downloadOutputBtn" title="Download processed image" class="download-btn text-xs font-mono text-muted hover:text-text border border-border hover:border-muted rounded px-2 py-0.5 transition-all duration-150 flex items-center gap-1">
                                         <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1v7M3.5 5.5 6 8l2.5-2.5"/><path d="M2 10h8"/></svg>
@@ -202,7 +203,7 @@
                 <a href="https://github.com/Aravkataria/pyramid-compression" target="_blank" class="hover:text-text transition-colors">GitHub Repository</a>
             </div>
         </div>
-    </footer>
+    </footer >
 
     <script src="script.js"></script>
 </body>
