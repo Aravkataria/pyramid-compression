@@ -17,7 +17,7 @@ No external services. No accounts. Just pixels doing math.
   - [Compression](#compression-explained)
   - [Decompression](#decompression-explained)
   - [What Gets Lost](#what-gets-lost)
-
+- [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
   - [Requirements](#requirements)
   - [Running the Compressor](#running-the-compressor)
@@ -46,8 +46,11 @@ Built as a learning project, but usable as an actual tool.
 
 Every compression "level" cuts the image in half — both width and height — by averaging groups of 4 pixels:
 
-```
-new_pixel = (top_left + top_right + bottom_left + bottom_right) / 4
+```math
+P_{\text{new}} =
+\frac{
+P_{(x,y)} + P_{(x+1,y)} + P_{(x,y+1)} + P_{(x+1,y+1)}
+}{4}
 ```
 
 This is applied to every 2×2 block in the image. The result is a new image at half the resolution. Apply it again and it halves again. 3 levels on a 1920×1080 photo gives you 240×135.
@@ -70,6 +73,16 @@ When you average 4 pixels into 1, the detail in those 4 pixels is gone forever. 
 That's not a bug, it's the point. This isn't trying to compete with JPEG. It's showing you what compression actually does.
 
 ---
+## Project Structure
+ 
+```
+├── index.html        # Interactive Web Workspace markup structure
+├── style.css         # Typography, layout definitions, and dual color themes
+├── script.js         # Engine executing downscale/upscale logic via HTML5 Canvas
+├── main.py           # Unified local Python terminal orchestration pipeline
+├── compressor.py     # Independent image downscaling script
+└── decompressor.py   # Independent image reconstruction script (uses metadata sidecars)
+```
 
 ---
 
