@@ -76,6 +76,40 @@ document.addEventListener("DOMContentLoaded", () => {
         reader.readAsDataURL(file);
     }
 
+    // --- Download Buttons ---
+    const downloadOriginalBtn = document.getElementById('downloadOriginalBtn');
+    const downloadOutputBtn = document.getElementById('downloadOutputBtn');
+
+    function downloadCanvas(canvas, filename) {
+        if (!canvas.width || !canvas.height) return;
+        const link = document.createElement('a');
+        link.download = filename;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }
+
+    function flashBtn(btn) {
+        const orig = btn.innerHTML;
+        btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg> saved`;
+        btn.classList.add('saved');
+        setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('saved'); }, 1400);
+    }
+
+    downloadOriginalBtn.addEventListener('click', () => {
+        downloadCanvas(originalCanvas, 'original.png');
+        flashBtn(downloadOriginalBtn);
+    });
+
+    downloadOutputBtn.addEventListener('click', () => {
+        const mode = modeSelect.value;
+        const levels = levelsInput.value;
+        const suffix = mode === 'compress'
+            ? `compressed-${levels}lvl`
+            : `decompressed-${levels}lvl-${methodSelect.value}`;
+        downloadCanvas(outputCanvas, `pyramid-${suffix}.png`);
+        flashBtn(downloadOutputBtn);
+    });
+
     // --- Start Over Button ---
     resetBtn.addEventListener('click', () => {
         editorView.classList.add('hidden');
