@@ -4,7 +4,7 @@
   <a href="https://aravkataria.github.io/pyramid-compression/">pyramid-compression</a>
 </h1>
 
-Take an image. Shrink it by blending groups of pixels together. Do it again. And again. That's the whole idea — a recursive compression method called pyramid downsampling, reimagined as an interactive tool you can run from the terminal or open straight in a browser.
+Take an image. Shrink it by blending groups of pixels together. Do it again. And again. That's the whole idea — a recursive compression method called pyramid downsampling, reimagined as an interactive tool you can run from the terminal or open straight in a browser. Which can work on **any ratio of pixal**
 
 No external services. No accounts. Just pixels doing math.
 
@@ -53,7 +53,7 @@ P_{(x,y)} + P_{(x+1,y)} + P_{(x,y+1)} + P_{(x+1,y+1)}
 }{4}
 ```
 
-This is applied to every 2×2 block in the image. The result is a new image at half the resolution. Apply it again and it halves again. 3 levels on a 1920×1080 photo gives you 240×135.
+This is applied to every 2×2 block in the image. The result is a new image at half the resolution. Apply it again and it halves again, this can work on **any ratio of pixal**. for example 3 levels on a 1920×1080 photo gives you 240×135.
 
 Each level is roughly a 75% reduction in pixel count, which translates directly to a smaller file.
 
@@ -106,6 +106,7 @@ Supported formats: JPG, PNG, WEBP, BMP — anything Pillow can open.
 
 ```bash
 python compressor.py
+
 ```
 
 You'll be walked through three prompts:
@@ -179,7 +180,7 @@ You'll also pick an upscaling method — `nearest` for a blocky look, `bilinear`
 
 ### Running the Full Pipeline
 
-[`main.py`][link to main.py] is a single entry point that lets you compress, decompress, or run both back-to-back in one go — useful if you want to immediately see the round-trip result:
+[main.py](main.py) is a single entry point that lets you compress, decompress, or run both back-to-back in one go — useful if you want to immediately see the round-trip result:
 
 ```bash
 python main.py
@@ -189,7 +190,7 @@ python main.py
 
 ## Web App
 
-[`index.html`][link to index.html] — open it in any browser. Nothing to install, no server running, no internet required after the page loads.
+[index.html](index.html) — open it in any browser. Nothing to install, no server running, no internet required after the page loads.
 
 **What it does:**
 - Drag and drop an image (or click to browse)
