@@ -17,6 +17,7 @@ No external services. No accounts. Just pixels doing math.
   - [Compression](#compression-explained)
   - [Decompression](#decompression-explained)
   - [What Gets Lost](#what-gets-lost)
+  - [Data Security](#Data-Security)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
   - [Requirements](#requirements)
@@ -71,6 +72,13 @@ The `.meta.txt` sidecar file saved during compression stores the original dimens
 When you average 4 pixels into 1, the detail in those 4 pixels is gone forever. Decompression can smooth things out but it can't recover what wasn't saved. The higher the compression level, the more the reconstructed image becomes an approximation — accurate in broad strokes, blurry or blocky in the fine details.
 
 That's not a bug, it's the point. This isn't trying to compete with JPEG. It's showing you what compression actually does.
+
+### Data Security
+
+Pyramid Compress is built with a strict zero-data-collection architecture. Your personal photos are entirely safe because they never leave your device.
+
+- Web Version (100% Client-Side): The browser app process images directly inside your active browser tab. When you drag and drop a file, it is only loaded into your computer's local memory. No images are ever uploaded to an external server, and no cloud storage is used.
+- Python Version (100% Offline): The command-line scripts run entirely on your local machine. They read your original image, process the pixel math using your computer's RAM, and save the new file straight back to your hard drive. It does not require an internet connection to function.
 
 ---
 ## Project Structure
@@ -235,6 +243,23 @@ Neither is strictly better — it depends on what you're going for.
 ## Quality — PSNR
 
 PSNR (Peak Signal-to-Noise Ratio) is a standard way to measure how much quality was lost after compressing and decompressing. The Python tools print this automatically so you can compare settings.
+
+```math
+\text{MSE} =
+\frac{1}{3HW}
+\sum_{c=1}^{3}
+\sum_{y=1}^{H}
+\sum_{x=1}^{W}
+\left(I_{\text{orig}}(x,y,c)-I_{\text{recon}}(x,y,c)\right)^2
+```
+
+```math
+\text{PSNR} =
+10 \cdot \log_{10}
+\left(
+\frac{255^2}{\text{MSE}}
+\right)
+```
 
 Higher = better. A difference of a few dB is often visible; 10+ dB is very noticeable.
 
