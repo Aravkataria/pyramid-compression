@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const methodSelect = document.getElementById('methodSelect');
     const methodGroup = document.getElementById('methodGroup');
     const outputLabel = document.getElementById('outputLabel');
+    const psnrDisplay = document.getElementById('psnrDisplay'); // ADDED: Reference to HTML element
 
     // --- Canvas Elements ---
     const originalCanvas = document.getElementById('originalCanvas');
@@ -117,6 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         uploadView.classList.remove('hidden');
         workspaceTitle.innerText = "Upload Image";
         fileInput.value = ''; 
+        if (psnrDisplay) psnrDisplay.classList.add('hidden'); // ADDED: Hide on reset
     });
 
     // --- Editor Controls Listeners ---
@@ -163,6 +165,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             outputCanvas.style.imageRendering = 'pixelated'; // Keeps small images crisp
             renderToOutput(outData);
+            
+            // PSNR is mathematically undefined for different sizes (compressed image shrinks)
+            if (psnrDisplay) psnrDisplay.classList.add('hidden');
         } else {
             // Decompress Mode
             if (methodSelect.value === 'nearest') {
@@ -172,6 +177,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     outData = decompressNearest(outData);
                 }
                 renderToOutput(outData);
+                
+                // Calculate and update PSNR (sizes match original dimensions)
+                updatePsnrDisplay(imgData, outData);
             } else {
                 // Bilinear Method
                 outputCanvas.style.imageRendering = 'auto';
@@ -186,6 +194,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 dCtx.drawImage(originalCanvas, 0, 0, targetW, targetH);
                 
                 document.getElementById('outputSize').innerText = `${targetW} × ${targetH} px`;
+
+                // Calculate PSNR for bilinear mode
+                const bilinearData = dCtx.getImageData(0, 0, targetW, targetH);
+                updatePsnrDisplay(imgData, bilinearData);
             }
         }
     }
@@ -195,6 +207,51 @@ document.addEventListener("DOMContentLoaded", () => {
         outputCanvas.height = imageData.height;
         outputCanvas.getContext('2d').putImageData(imageData, 0, 0);
         document.getElementById('outputSize').innerText = `${imageData.width} × ${imageData.height} px`;
+    }
+
+    // --- ADDED: PSNR Display Manager ---
+    function updatePsnrDisplay(originalData, processedData) {
+        if (!psnrDisplay) return;
+
+        const value = calculatePSNR(originalData, processedData);
+        if (value === null) {
+            psnrDisplay.classList.add('hidden');
+        } else if (value === Infinity) {
+            psnrDisplay.innerText = "PSNR: Perfect (∞)";
+            psnrDisplay.classList.remove('hidden');
+        } else {
+            psnrDisplay.innerText = `PSNR: ${value.toFixed(2)} dB`;
+            psnrDisplay.classList.remove('hidden');
+        }
+    }
+
+    // --- ADDED: Mathematical PSNR Logic ---
+    function calculatePSNR(imgData1, imgData2) {
+        if (imgData1.width !== imgData2.width || imgData1.height !== imgData2.height) {
+            return null; // Dimensions must strictly match to compare pixel by pixel
+        }
+
+        const data1 = imgData1.data;
+        const data2 = imgData2.data;
+        let sumSquaredError = 0;
+        const totalPixels = imgData1.width * imgData1.height;
+
+        // Loop through RGB channels only (skipping alpha channel at index c + 3)
+        for (let i = 0; i < data1.length; i += 4) {
+            const rDiff = data1[i] - data2[i];
+            const gDiff = data1[i + 1] - data2[i + 1];
+            const bDiff = data1[i + 2] - data2[i + 2];
+
+            sumSquaredError += (rDiff * rDiff) + (gDiff * gDiff) + (bDiff * bDiff);
+        }
+
+        // Mean Squared Error over 3 color channels
+        const mse = sumSquaredError / (totalPixels * 3);
+
+        if (mse === 0) return Infinity;
+
+        // PSNR formula: $10 \cdot \log_{10}(\frac{MAX^2}{MSE})$ where MAX value for 8-bit color is 255
+        return 10 * Math.log10((255 * 255) / mse);
     }
 
     // --- Algorithm Ports ---
