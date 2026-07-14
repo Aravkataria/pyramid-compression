@@ -11,8 +11,8 @@ No external services. No accounts. Just pixels doing math.
 ---
 
 <p align="center">
-  <img src="https://hitscounter.dev/api/hit?urlhttps%3A%2F%2Faravkataria.github.io%2Fpyramid-compression%2F&label=Website+Visitors&color=00bfff&style=for-the-badge&v=1" />
-  <img src="https://hitscounter.dev/api/hit?url=hhttps%3A%2F%2Fgithub.com%2FAravkataria%2Fpyramid-compression&label=Repo+Visitors&color=00bfff&style=for-the-badge&v=1" />
+  <img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Faravkataria.github.io%2Fpyramid-compression%2F&label=Website+Visitors&color=00bfff&style=for-the-badge&v=1" />
+  <img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2FAravkataria%2Fpyramid-compression&label=Repo+Visitors&color=00bfff&style=for-the-badge&v=1" />
   <img src="https://img.shields.io/github/stars/Aravkataria/pyramid-compression?style=for-the-badge&color=00bfff" />
   <img src="https://img.shields.io/github/forks/Aravkataria/pyramid-compression?style=for-the-badge&color=00bfff" />
 </p>
