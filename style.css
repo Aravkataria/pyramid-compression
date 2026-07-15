@@ -21,17 +21,8 @@
     --color-accent-text: #000000;
 }
 
-* {
-    -webkit-tap-highlight-color: transparent;
-}
-
-html {
-    -webkit-text-size-adjust: 100%;
-}
-
 body {
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
 }
 
 /* Accent Fonts */
@@ -42,19 +33,8 @@ em {
     color: var(--color-muted);
 }
 
-/* Visible keyboard focus everywhere, mouse users don't see it */
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-[tabindex]:focus-visible {
-    outline: 2px solid var(--color-text);
-    outline-offset: 2px;
-    border-radius: 4px;
-}
-
 /* Mac-like Window Dots */
-.dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.dot { width: 12px; height: 12px; border-radius: 50%; }
 .dot.red { background: #ff5f56; }
 .dot.yellow { background: #ffbd2e; }
 .dot.green { background: #27c93f; }
@@ -71,15 +51,6 @@ select:focus-visible,
 .drop-zone-active {
     border-color: var(--color-text) !important;
     background-color: var(--color-bg) !important;
-    transform: scale(1.01);
-}
-
-#dropZone {
-    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
-}
-
-#dropZone:active {
-    transform: scale(0.99);
 }
 
 /* Custom Scrollbar for inner elements */
@@ -101,122 +72,6 @@ select:focus-visible,
     border-color: var(--color-text) !important;
 }
 
-.download-btn, #resetBtn, #themeToggle, .mock-window a, button {
-    transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease, opacity 0.15s ease, transform 0.15s ease;
-}
-
-/* Bigger, easier-to-hit touch targets on touch devices without changing visual density on desktop */
-@media (pointer: coarse) {
-    .download-btn {
-        padding-top: 0.4rem;
-        padding-bottom: 0.4rem;
-        min-height: 32px;
-    }
-    #themeToggle {
-        min-height: 36px;
-    }
-}
-
-/* Output canvas cross-fade when re-processing */
-#outputCanvas, #originalCanvas {
-    transition: opacity 0.25s ease;
-}
-.canvas-updating {
-    opacity: 0.4;
-}
-
-/* Range input: consistent, larger thumb across browsers for real touch usability */
-input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    height: 4px;
-    background: var(--color-border);
-    border-radius: 999px;
-    outline: none;
-}
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: var(--color-text);
-    border: 3px solid var(--color-bg);
-    box-shadow: 0 0 0 1px var(--color-border);
-    cursor: pointer;
-    transition: transform 0.15s ease;
-}
-input[type="range"]::-webkit-slider-thumb:hover,
-input[type="range"]::-webkit-slider-thumb:active {
-    transform: scale(1.15);
-}
-input[type="range"]::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: var(--color-text);
-    border: 3px solid var(--color-bg);
-    box-shadow: 0 0 0 1px var(--color-border);
-    cursor: pointer;
-}
-
-/* Mobile nav sheet */
-#mobileMenu {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-#mobileMenu.open {
-    max-height: 240px;
-}
-#menuToggle span {
-    display: block;
-    width: 18px;
-    height: 1.5px;
-    background: var(--color-text);
-    transition: transform 0.25s ease, opacity 0.2s ease;
-}
-#menuToggle.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
-#menuToggle.open span:nth-child(2) { opacity: 0; }
-#menuToggle.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
-
-/* Feature cards: quiet hover + scroll reveal */
-.feature-card {
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.feature-card.in-view {
-    opacity: 1;
-    transform: translateY(0);
-}
-.feature-card:hover .feature-icon {
-    transform: translateY(-2px);
-}
-.feature-icon {
-    transition: transform 0.2s ease;
-    display: inline-block;
-}
-
-/* Editor view swap */
-#uploadView, #editorView {
-    transition: opacity 0.35s ease;
-}
-.view-hidden {
-    display: none !important;
-}
-.view-entering {
-    opacity: 0;
-}
-
-/* Safe-area padding for notched phones */
-nav {
-    padding-top: env(safe-area-inset-top);
-}
-footer {
-    padding-bottom: calc(env(safe-area-inset-bottom) + 1.5rem);
-}
-
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
@@ -224,29 +79,4 @@ footer {
 .animate-fade {
     animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
-}
-
-/* Respect the user's motion preference everywhere */
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: 0.001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.001ms !important;
-        scroll-behavior: auto !important;
-    }
-    .animate-fade {
-        opacity: 1;
-        transform: none;
-    }
-    .feature-card {
-        opacity: 1;
-        transform: none;
-    }
-}
-
-/* Small phones: keep canvas panels from eating the whole viewport */
-@media (max-width: 480px) {
-    #originalCanvas, #outputCanvas {
-        max-height: 300px;
-    }
 }
