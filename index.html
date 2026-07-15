@@ -1,209 +1,141 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pyramid·Compress | Web App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pyramid·Compress | Pro</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: ['class', '[data-theme="dark"]'],
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    colors: {
-                        bg: 'var(--color-bg)',
-                        surface: 'var(--color-surface)',
-                        border: 'var(--color-border)',
-                        text: 'var(--color-text)',
-                        muted: 'var(--color-muted)',
-                        accent: 'var(--color-accent)',
-                        accentText: 'var(--color-accent-text)'
-                    }
-                }
-            }
-        }
-    </script>
 </head>
-<body class="bg-bg text-text transition-colors duration-300 relative">
+<body>
+    <div class="cur" id="cur"></div>
+    <div class="cur-ring" id="curRing"></div>
+    <div class="grid-bg"></div>
 
-    <nav class="fixed top-0 w-full bg-bg/80 backdrop-blur-md border-b border-border z-50 transition-colors duration-300">
-        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="#" class="font-semibold tracking-tight text-lg">Pyramid·Compress</a>
-            <div class="hidden md:flex space-x-8 text-sm text-muted">
-                <a href="#workspace" class="hover:text-text transition-colors">Workspace</a>
-                <a href="#features" class="hover:text-text transition-colors">Features</a>
-            </div>
-            <div class="flex items-center gap-4">
-                <button id="themeToggle" class="text-xs border border-border px-3 py-1.5 rounded hover:bg-surface transition-colors font-medium">
-                    ☀️ Light Mode
-                </button>
-                <a href="https://github.com/Aravkataria/pyramid-compression" target="_blank" class="text-sm font-medium hover:text-muted transition-colors hidden sm:block">GitHub ↗</a>
-            </div>
+    <nav>
+        <div class="nav-logo">Pyramid·Compress</div>
+        <div class="nav-right">
+            <a href="#workspace" class="nav-link hide-mobile">Workspace</a>
+            <a href="#features" class="nav-link hide-mobile">Features</a>
+            <button class="theme-toggle" id="themeToggle">☀️ Light</button>
         </div>
     </nav>
 
-    <section class="pt-40 pb-16 px-6 bg-grid relative overflow-hidden">
-        <div class="absolute inset-0 bg-bg [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black_70%)] pointer-events-none transition-colors duration-300"></div>
-
-        <div class="max-w-6xl mx-auto relative z-10 text-center md:text-left animate-fade">
-            <p class="text-sm text-muted mb-4 font-mono uppercase tracking-widest">NumPy Logic · Browser Execution</p>
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-medium tracking-tighter leading-tight mb-8">
-                Compress <em>images,</em><br> recursively.
-            </h1>
-            <p class="text-lg md:text-xl text-muted max-w-2xl leading-relaxed mb-10 mx-auto md:mx-0">
-                A visual tool that shrinks images by averaging 2x2 pixel blocks, and reconstructs them using nearest-neighbor or bilinear interpolation.
-            </p>
-            <a href="#workspace" class="inline-block bg-accent text-accentText px-8 py-3.5 rounded-full font-medium hover:opacity-90 transition-opacity">
-                Open Workspace ↓
-            </a>
-        </div>
+    <section id="hero">
+        <div class="badge">NumPy Logic · Browser Execution</div>
+        <h1 class="hero-h1">Compress <em>images,</em><br>recursively.</h1>
+        <p class="hero-sub">A visual tool that shrinks images by averaging 2x2 pixel blocks, and reconstructs them using nearest-neighbor or bilinear interpolation.</p>
+        <a href="#workspace" class="btn-p">Open Workspace ↓</a>
     </section>
 
-    <section id="workspace" class="py-12 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="mock-window bg-surface border border-border rounded-xl shadow-2xl overflow-hidden transition-colors duration-300 animate-fade" style="animation-delay: 0.2s;">
-                
-                <div class="bg-bg border-b border-border px-4 py-3 flex items-center justify-between">
-                    <div class="flex gap-2">
-                        <div class="dot red"></div>
-                        <div class="dot yellow"></div>
-                        <div class="dot green"></div>
-                    </div>
-                    <span class="text-xs text-muted font-mono tracking-wider uppercase" id="workspaceTitle">Upload Image</span>
-                    <div class="w-10"></div> </div>
-
-                <div id="uploadView" class="p-8 md:p-16 flex flex-col items-center justify-center min-h-[400px]">
-                    <div id="dropZone" class="w-full max-w-2xl border-2 border-dashed border-border rounded-xl p-12 text-center transition-all duration-200 cursor-pointer hover:border-muted hover:bg-bg/50 group">
-                        <div class="mb-4 text-muted group-hover:text-text transition-colors">
-                            <svg class="mx-auto w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                        </div>
-                        <h3 class="text-xl font-medium mb-2">Drag & Drop your image</h3>
-                        <p class="text-muted mb-6 text-sm">Supports JPG, PNG, WEBP, and BMP</p>
-                        <input type="file" id="fileInput" accept="image/*" class="hidden">
-                        <button class="bg-border text-text px-6 py-2 rounded-lg font-medium hover:bg-muted/30 transition-colors pointer-events-none">Browse Files</button>
-                    </div>
-                </div>
-
-                <div id="editorView" class="hidden flex-col">
-                    <div class="bg-bg/50 p-4 border-b border-border flex flex-wrap items-end justify-between gap-4">
-                        <div class="flex flex-wrap gap-6">
-                            <div class="flex flex-col gap-1.5">
-                                <label class="text-xs font-medium text-muted uppercase tracking-wider">Action</label>
-                                <select id="modeSelect" class="bg-surface border border-border text-text text-sm rounded-lg px-3 py-2 outline-none cursor-pointer">
-                                    <option value="compress">Compress Image</option>
-                                    <option value="decompress">Decompress Image</option>
-                                </select>
-                            </div>
-                            
-                            <div class="flex flex-col gap-1.5 min-w-[150px]">
-                                <label class="text-xs font-medium text-muted uppercase tracking-wider">Levels: <span id="levelsDisplay" class="text-text font-mono">2</span></label>
-                                <input type="range" id="levelsInput" min="1" max="6" value="2" class="w-full h-8 cursor-pointer accent-text">
-                            </div>
-
-                            <div id="methodGroup" class="flex flex-col gap-1.5 hidden">
-                                <label class="text-xs font-medium text-muted uppercase tracking-wider">Method</label>
-                                <select id="methodSelect" class="bg-surface border border-border text-text text-sm rounded-lg px-3 py-2 outline-none cursor-pointer">
-                                    <option value="nearest">Nearest (Blocky)</option>
-                                    <option value="bilinear">Bilinear (Smooth)</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <button id="resetBtn" class="text-sm font-medium text-muted hover:text-text transition-colors">
-                            ✕ Start Over
-                        </button>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-border">
-                        <div class="flex flex-col bg-surface min-h-[400px]">
-                            <div class="flex justify-between items-center p-3 border-b border-border bg-bg/30">
-                                <span class="text-sm font-medium">Original</span>
-                                <div class="flex items-center gap-3">
-                                    <span id="originalSize" class="text-xs font-mono text-muted">-- × -- px</span>
-                                    <button id="downloadOriginalBtn" title="Download original image" class="download-btn text-xs font-mono text-muted hover:text-text border border-border hover:border-muted rounded px-2 py-0.5 transition-all duration-150 flex items-center gap-1">
-                                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1v7M3.5 5.5 6 8l2.5-2.5"/><path d="M2 10h8"/></svg>
-                                        save
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="flex-1 p-4 flex items-center justify-center overflow-hidden">
-                                <canvas id="originalCanvas" class="max-w-full max-h-[500px] object-contain shadow-md"></canvas>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-col bg-surface min-h-[400px]">
-                            <div class="flex justify-between items-center p-3 border-b border-border bg-bg/30">
-                                <span id="outputLabel" class="text-sm font-medium">Compressed</span>
-                                <div class="flex items-center gap-3">
-                                    <span id="psnrDisplay" class="text-xs font-mono bg-accent/10 text-accent border border-accent/20 px-2 py-0.5 rounded hidden">PSNR: -- dB</span>
-                                    <span id="outputSize" class="text-xs font-mono text-muted">-- × -- px</span>
-                                    <button id="downloadOutputBtn" title="Download processed image" class="download-btn text-xs font-mono text-muted hover:text-text border border-border hover:border-muted rounded px-2 py-0.5 transition-all duration-150 flex items-center gap-1">
-                                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1v7M3.5 5.5 6 8l2.5-2.5"/><path d="M2 10h8"/></svg>
-                                        save
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="flex-1 p-4 flex items-center justify-center overflow-hidden bg-grid">
-                                <canvas id="outputCanvas" class="max-w-full max-h-[500px] object-contain shadow-md transition-all"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+    <section id="workspace">
+        <div class="app-window sr">
+            <div class="window-header">
+                <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+                <div class="window-title" id="windowTitle">Upload Image</div>
+                <div style="width: 42px;"></div> 
             </div>
-        </div>
-    </section>
 
-    <section id="features" class="py-24 px-6 border-t border-border mt-12">
-        <div class="max-w-6xl mx-auto animate-fade" style="animation-delay: 0.4s;">
-            <h2 class="text-sm font-mono text-muted mb-2 uppercase tracking-widest">01 — Features</h2>
-            <h3 class="text-4xl md:text-5xl font-medium tracking-tight mb-16">Four functions.<br><em>One pipeline.</em></h3>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
-                <div>
-                    <div class="text-2xl mb-4">🗜️</div>
-                    <h4 class="text-xl font-medium mb-2 font-mono">compress_one_level()</h4>
-                    <p class="text-muted leading-relaxed">Shrinks image by half recursively. Averages every 2x2 block into 1 single pixel. Works natively with grayscale and RGB/RGBA images.</p>
+            <div id="uploadView">
+                <div class="drop-zone" id="dropZone">
+                    <div class="drop-icon">🗜️</div>
+                    <h3 style="margin-bottom: 8px; font-weight: 500;">Drag & Drop your image</h3>
+                    <p style="font-size: 0.85rem; color: var(--color-muted); margin-bottom: 24px;">Supports JPG, PNG, WEBP</p>
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    <button class="btn-dl" style="padding: 8px 16px;" onclick="document.getElementById('fileInput').click()">Browse Files</button>
                 </div>
-                <div>
-                    <div class="text-2xl mb-4">🔍</div>
-                    <h4 class="text-xl font-medium mb-2 font-mono">decompress_one_level_nearest()</h4>
-                    <p class="text-muted leading-relaxed">Lightning-fast scaling. Copies each pixel into a 2x2 block, generating a highly stylized, blocky/pixelated retro result.</p>
+            </div>
+
+            <div id="editorView">
+                <div class="controls-bar">
+                    <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+                        <div class="control-group">
+                            <span class="control-label">Action</span>
+                            <select id="modeSelect">
+                                <option value="compress">Compress Image</option>
+                                <option value="decompress">Decompress Image</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <span class="control-label"><span>Levels</span> <span id="levelsDisplay" style="color: var(--color-text);">2</span></span>
+                            <input type="range" id="levelsInput" min="1" max="6" value="2">
+                        </div>
+                        <div class="control-group" id="methodGroup" style="display: none;">
+                            <span class="control-label">Method</span>
+                            <select id="methodSelect">
+                                <option value="nearest">Nearest (Blocky)</option>
+                                <option value="bilinear">Bilinear (Smooth)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn-reset" id="resetBtn">✕ Start Over</button>
                 </div>
-                <div>
-                    <div class="text-2xl mb-4">🖼️</div>
-                    <h4 class="text-xl font-medium mb-2 font-mono">decompress_one_level_bilinear()</h4>
-                    <p class="text-muted leading-relaxed">Interpolates between neighboring pixels mathematically, returning a smoother, blended upscaled image resembling standard resize functions.</p>
-                </div>
-                <div>
-                    <div class="text-2xl mb-4">📊</div>
-                    <h4 class="text-xl font-medium mb-2 font-mono">psnr()</h4>
-                    <p class="text-muted leading-relaxed">Measures reconstruction quality using Peak Signal-to-Noise Ratio (PSNR), allowing analytical comparison of quality loss.</p>
+
+                <div class="canvas-grid">
+                    <div class="canvas-panel">
+                        <div class="panel-header">
+                            <span class="panel-title">Original</span>
+                            <div class="panel-stats">
+                                <span class="stat-text" id="originalSize">-- × -- px</span>
+                                <button class="btn-dl" id="downloadOriginalBtn">Save</button>
+                            </div>
+                        </div>
+                        <div class="canvas-wrap">
+                            <canvas id="originalCanvas"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="canvas-panel">
+                        <div class="panel-header">
+                            <span class="panel-title" id="outputLabel">Compressed</span>
+    
+                            <div class="panel-stats">
+                                <span class="stat-text psnr-badge" id="psnrDisplay" style="display: none;">PSNR: --</span>
+                                <span class="stat-text" id="outputSize">-- × -- px</span>
+                                <button class="btn-dl" id="downloadOutputBtn">Save</button>
+                            </div>
+                        </div>
+                        <div class="canvas-wrap">
+                            <canvas id="outputCanvas"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-10 border-t border-border bg-surface text-center transition-colors duration-300">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="text-sm text-muted">
-                © 2026 Pyramid Compression · MIT License
+    <section class="section" id="features">
+        <div class="sec-tag sr">01 — Features</div>
+        <h2 class="sec-h2 sr">Four functions.<br><em>One pipeline.</em></h2>
+        <div class="features-grid">
+            <div class="feat sr">
+                <span class="feat-icon">🗜️</span>
+                <div class="feat-title">compress_one_level()</div>
+                <p class="feat-desc">Shrinks image by half recursively. Averages every 2x2 block into 1 single pixel. Works natively with grayscale and RGB/RGBA images.</p>
             </div>
-            <div class="flex gap-6 text-sm">
-                <a href="https://github.com/Aravkataria/pyramid-compression" target="_blank" class="hover:text-text transition-colors">GitHub Repository</a>
+            <div class="feat sr">
+                <span class="feat-icon">🔍</span>
+                <div class="feat-title">decompress_nearest()</div>
+                <p class="feat-desc">Lightning-fast scaling. Copies each pixel into a 2x2 block, generating a highly stylized, blocky/pixelated retro result.</p>
+            </div>
+            <div class="feat sr">
+                <span class="feat-icon">🖼️</span>
+                <div class="feat-title">decompress_bilinear()</div>
+                <p class="feat-desc">Interpolates between neighboring pixels mathematically, returning a smoother, blended upscaled image resembling standard resize functions.</p>
+            </div>
+            <div class="feat sr">
+                <span class="feat-icon">📊</span>
+                <div class="feat-title">psnr()</div>
+                <p class="feat-desc">Measures reconstruction quality using Peak Signal-to-Noise Ratio (PSNR), allowing analytical comparison of quality loss.</p>
             </div>
         </div>
-    </footer >
+    </section>
+
+    <footer>
+        © 2026 Pyramid Compression · MIT License
+    </footer>
 
     <script src="script.js"></script>
 </body>
