@@ -215,8 +215,7 @@
             background: var(--color-surface); color: var(--color-text);
         }
         .feat-icon-box svg { width: 19px; height: 19px; }
-        .feat-title { font-size: 1.05rem; font-weight: 500; margin-bottom: 4px; letter-spacing: -0.01em; }
-        .feat-code { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--color-muted); margin-bottom: 12px; }
+        .feat-title { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 0.95rem; margin-bottom: 10px; }
         .feat-desc { font-size: 0.85rem; line-height: 1.7; color: var(--color-muted); }
 
         /* ─── ANIMATIONS & UTILS ─── */
