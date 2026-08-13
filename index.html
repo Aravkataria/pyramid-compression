@@ -114,7 +114,8 @@
                 <div class="feat-icon-box">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M4 4l6 6M20 9V4h-5M20 4l-6 6M4 15v5h5M4 20l6-6M20 15v5h-5M20 20l-6-6"/></svg>
                 </div>
-                <div class="feat-title">compress_one_level()</div>
+                <div class="feat-title">Shrink in Half</div>
+                <div class="feat-code">compress_one_level()</div>
                 <p class="feat-desc">Makes the image half its size. Every little 2×2 group of pixels gets blended into one — so the picture shrinks without just chopping detail off.</p>
             </div>
             <div class="feat sr">
@@ -122,7 +123,8 @@
                 <div class="feat-icon-box">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg>
                 </div>
-                <div class="feat-title">decompress_nearest()</div>
+                <div class="feat-title">Fast Zoom, Blocky</div>
+                <div class="feat-code">decompress_nearest()</div>
                 <p class="feat-desc">Scales the shrunk image back up the fast way — each pixel just gets copied into a bigger square. Quick, but it looks blocky, like old-school pixel art.</p>
             </div>
             <div class="feat sr">
@@ -130,7 +132,8 @@
                 <div class="feat-icon-box">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="5" cy="19" r="1.4" fill="currentColor" stroke="none"/><circle cx="19" cy="5" r="1.4" fill="currentColor" stroke="none"/><path d="M5 19C9 15 15 9 19 5"/></svg>
                 </div>
-                <div class="feat-title">decompress_bilinear()</div>
+                <div class="feat-title">Slow Zoom, Smooth</div>
+                <div class="feat-code">decompress_bilinear()</div>
                 <p class="feat-desc">Scales the shrunk image back up the smooth way — it blends neighboring pixels together instead of copying them, so the result looks soft and natural instead of blocky.</p>
             </div>
             <div class="feat sr">
@@ -138,7 +141,8 @@
                 <div class="feat-icon-box">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20V13M20 20V16"/></svg>
                 </div>
-                <div class="feat-title">psnr()</div>
+                <div class="feat-title">Quality Score</div>
+                <div class="feat-code">psnr()</div>
                 <p class="feat-desc">Gives the rebuilt image a score out of how close it looks to the original — the higher the number, the less detail was lost along the way.</p>
             </div>
         </div>
