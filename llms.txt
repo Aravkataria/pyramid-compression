@@ -1,0 +1,29 @@
+# Pyramid Compress
+
+> Recursive image compression built from the underlying pixel math instead of wrapping an existing codec. Each "level" halves width and height by averaging 2×2 pixel blocks (pyramid downsampling); decompression scales back up via nearest-neighbor or bilinear reconstruction, with PSNR reported to measure quality loss. Ships as both a Python CLI and a fully client-side browser app — no image ever leaves the user's device. Demo: https://aravkataria.github.io/pyramid-compression/
+
+Built as a learning project to make image compression visible and hands-on rather than a black box — the person chooses how many times to halve the image, watches the resolution shrink step by step, then reconstructs it and sees the size/quality tradeoff directly via PSNR. Works on any image Pillow can open (JPG, PNG, WEBP, BMP).
+
+## Python CLI
+
+- [compressor.py](compressor.py): Standalone image downscaling script — prompts for image path, compression levels (1–10, with a preview table of resulting resolution/reduction), and output path; saves a `.meta.txt` sidecar with original dimensions and level count
+- [decompressor.py](decompressor.py): Standalone reconstruction script — reads the `.meta.txt` sidecar (or accepts manual input), reconstructs via nearest-neighbor or bilinear upscaling, prints PSNR
+- [main.py](main.py): Unified entry point that runs compress, decompress, or both back-to-back in one pipeline
+
+## Web app (client-side only)
+
+- [index.html](index.html): Interactive workspace markup — drag-and-drop, compress/decompress toggle, level slider (1–6), nearest/bilinear switch, side-by-side comparison, PNG download, light/dark theme
+- [script.js](script.js): Same downscale/upscale averaging algorithm as the Python version, ported to vanilla JS using the Canvas API — all processing happens in-browser, nothing is uploaded
+- [style.css](style.css): Typography, layout, and the two color themes
+
+## How it works
+
+- Compression: each level averages every 2×2 pixel block into 1, halving width and height (~75% pixel reduction per level)
+- Decompression: doubles resolution back up per level, either by exact nearest-neighbor pixel-block copy (blocky, good for pixel art) or bilinear interpolation (smoother, more photographic)
+- Quality is measured with PSNR (Peak Signal-to-Noise Ratio) between original and reconstructed image — printed automatically by the Python tools
+- Data never leaves the device: the web version processes entirely client-side in the browser tab; the Python version runs fully offline with no network calls
+
+## Docs
+
+- [README.md](README.md): Full writeup — motivation, compression/decompression math, PSNR quality table, level-selection guidance, and usage examples for both CLI and web app
+- [LICENSE](LICENSE): MIT
