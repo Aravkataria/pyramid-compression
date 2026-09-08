@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# LLM / AI Crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Sitemap Location
+Sitemap: https://aravkataria.github.io/pyramid-compression/sitemap.xml
