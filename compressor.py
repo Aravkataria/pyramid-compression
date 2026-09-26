@@ -1,3 +1,4 @@
+import subprocess
 import os
 import sys
 import math
@@ -8,7 +9,7 @@ try:
     import numpy as np
 except ImportError:
     print("Installing required libraries...")
-    os.system("pip install Pillow numpy --break-system-packages -q")
+    subprocess.run("pip install Pillow numpy --break-system-packages -q", shell=False, check=True)
     from PIL import Image
     import numpy as np
 
